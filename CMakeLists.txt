@@ -26,15 +26,22 @@ if (PROJECT_IS_TOP_LEVEL)
 endif()
 
 # RTL compilation
-set(RTL_SRC_DIR rtl/src)
+set(RTL_SRC_DIR rtl)
 set(RTL_SRCS
+    ${RTL_SRC_DIR}/MUX2.sv
+    ${RTL_SRC_DIR}/MUX3.sv
+    ${RTL_SRC_DIR}/Adder.sv
+    ${RTL_SRC_DIR}/Decoder.sv
     ${RTL_SRC_DIR}/DEF.sv
-    ${RTL_SRC_DIR}/Intf.sv
-    ${RTL_SRC_DIR}/BranchComp.sv
-    ${RTL_SRC_DIR}/ImmExt.sv
-    ${RTL_SRC_DIR}/LDFilter.sv
+    ${RTL_SRC_DIR}/JB_Unit.sv
+    ${RTL_SRC_DIR}/Imm_Ext.sv
+    ${RTL_SRC_DIR}/LD_Filter.sv
     ${RTL_SRC_DIR}/ALU.sv
-    ${RTL_SRC_DIR}/ProgramCounter.sv
+    ${RTL_SRC_DIR}/Reg_PC.sv
+    ${RTL_SRC_DIR}/Reg_D.sv
+    ${RTL_SRC_DIR}/Reg_E.sv
+    ${RTL_SRC_DIR}/Reg_M.sv
+    ${RTL_SRC_DIR}/Reg_W.sv
     ${RTL_SRC_DIR}/RegFile.sv
     ${RTL_SRC_DIR}/Controller.sv
     ${RTL_SRC_DIR}/ROM.sv
