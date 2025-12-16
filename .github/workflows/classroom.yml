@@ -1,0 +1,49 @@
+name: Autograding Tests
+on:
+  - push
+  - workflow_dispatch
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: [self-hosted, Linux, X64]
+    container: ghcr.io/computer-organization-at-ncku-ee/co-docker-env:latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - name: Compilation test
+      id: compilation-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Compilation test
+        setup-command: |
+          mkdir build && cd build
+          cmake ..
+        command: |
+          cd build
+          make -j
+        timeout: 30
+        max-score: 10
+    - name: Quick Sort Test
+      id: quick-sort-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Quick Sort Test
+        command: |
+          cd build
+          ctest -R "qsort_test"
+        timeout: 30
+        max-score: 70
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        COMPILATION-TEST_RESULTS: "${{steps.compilation-test.outputs.result}}"
+        QUICK-SORT-TEST_RESULTS: "${{steps.quick-sort-test.outputs.result}}"
+      with:
+        runners: compilation-test,quick-sort-test
