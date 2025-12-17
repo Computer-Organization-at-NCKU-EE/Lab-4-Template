@@ -35,6 +35,8 @@ always @(*) begin
      end 
      else if (inst[6:2] == 5'b11011 )begin // J type -> opcode[6:2] = 11011 
          imm_ext_out = {{12{inst[31]}}, inst[19: 12] , inst[20], inst[30: 21], 1'b0} ;
-     end 
+     end else begin
+         // skip
+     end
 end
 endmodule

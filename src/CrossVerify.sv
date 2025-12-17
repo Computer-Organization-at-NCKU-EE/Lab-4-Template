@@ -61,7 +61,7 @@ module CrossVerify ();
         do begin
             if (valid_inst == 1'b1) begin
                 // get the architectural states of both ISS and DUT
-                CrossVerify_get_arch_state(top.core.program_counter.current_pc, top.core.reg_file.mem);
+                CrossVerify_get_arch_state(top.core.wb_pc, top.core.regfile.registers);
 
                 // check the difference of arhitectural states between ISS and DUT
                 check_flag_successed = CrossVerify_check();

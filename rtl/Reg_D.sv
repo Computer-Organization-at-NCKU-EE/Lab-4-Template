@@ -9,5 +9,6 @@ module Reg_D (
     output reg [31:0] inst_out,
     output reg bubble_out
 );
-    // TODO: finish Reg_D (decode) design
+    // TODO: finish Decode-stage Pipeline Register design
+    // ...
 endmodule

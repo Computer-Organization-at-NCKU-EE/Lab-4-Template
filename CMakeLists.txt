@@ -68,7 +68,7 @@ verilate(verilator_sim
     TOP_MODULE CrossVerify
     TRACE_FST
     SOURCES ${RTL_SRCS}
-    VERILATOR_ARGS -sv --timing --trace-structs
+    VERILATOR_ARGS -sv --timing --trace-structs -Wno-fatal
 )
 target_link_libraries(CrossVerify PUBLIC iss)
 target_link_libraries(verilator_sim PRIVATE CrossVerify)

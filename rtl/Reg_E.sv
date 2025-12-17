@@ -14,5 +14,6 @@ module Reg_E (
     output reg [31:0] sext_imm_out,
     output reg bubble_out
 );
-    // TODO: finish Reg_E (execute) design
+    // TODO: finish Execution-stage pipeline register design
+    // ...
 endmodule

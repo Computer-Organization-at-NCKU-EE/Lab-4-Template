@@ -5,6 +5,7 @@ module CoreTop (
     input [31:0] mem_r_data,
     output [3:0] mem_w_en,
     output [31:0] mem_w_data,
+    output [31:0] wb_pc,
     output valid_inst
 );
 
@@ -43,6 +44,8 @@ wire [31:0] a32 ;
 wire [31:0] a33 ;
 wire [31:0] a34 ; 
 wire [31:0] a35 ; 
+wire [31:0] a36 ;
+wire [31:0] a37 ;
 wire b1 ;           //stall
 wire b2 ;           // next_pc_sel
 wire [3:0] b3 ;           // F_im_w_en
@@ -68,7 +71,7 @@ wire bubble_reg_D,bubble_reg_E,bubble_reg_M,bubble_reg_W;//bubble
 ROM im (.clk(clk), .addr(a1[12:0]), .r_data(a2));
 
 // the dm part
-assign mem_addr = {16'd0, a27[15:0]};
+assign mem_addr = a27;
 assign mem_w_en = b14;
 assign mem_w_data = a28;
 assign a29 = mem_r_data;
@@ -109,30 +112,22 @@ MUX3 E_rs1_data_sel ( .in0(a33) , .in1(a27) , .in2(a17) , .sel(b6) , .out(a23) )
 
 MUX3 E_rs2_data_sel ( .in0(a33) , .in1(a27) , .in2(a18) , .sel(b7) , .out(a24) ) ;
 
-
-
-
-
 Adder adder ( .pc(a1) , .pc_plus_4(a35) );
 
+Reg_PC reg_pc ( .clk(clk) , .rst(rst) , .next_pc(a34) , .stall(b1) , .current_pc(a1) );
 
 Reg_D reg_d ( .clk(clk) , .rst(rst) , .pc_in(a1) , .inst_in(a2) , .stall(b1) , .jb(b2) , .pc_out(a3) , .inst_out(a4) ,.bubble_out(bubble_reg_D) );
-
 
 Reg_E  reg_e( .clk(clk) , .rst(rst) , .pc_in(a3) , .rs1_data_in(a14) , .rs2_data_in(a15) , .sext_imm_in(a11) ,
                 .stall(b1) , .jb(b2) , .pc_out(a16) , .rs1_data_out(a17) , .rs2_data_out(a18) , .sext_imm_out(a19) ,
                 .bubble_in(bubble_reg_D), .bubble_out(bubble_reg_E));
 
-
-
 Reg_M  reg_m( .clk(clk), .rst(rst), .alu_out_in(a25) , .rs2_data_in(a24) , .alu_out_out(a27) , .rs2_data_out(a28),
-              .bubble_in(bubble_reg_E), .bubble_out(bubble_reg_M) );
-
-Reg_PC reg_pc ( .clk(clk) , .rst(rst) , .next_pc(a34) , .stall(b1) , .current_pc(a1) );
+              .bubble_in(bubble_reg_E), .bubble_out(bubble_reg_M), .pc_in(a16), .pc_out(a36));
 
 Reg_W reg_w ( .clk(clk) , .rst(rst) , .alu_out_in(a27) , .ld_data_in(a29) , .alu_out_out(a30) , .ld_data_out(a31),
-              .bubble_in(bubble_reg_M),.bubble_out(bubble_reg_W) );
-
+              .bubble_in(bubble_reg_M),.bubble_out(bubble_reg_W), .pc_in(a36), .pc_out(a37));
+assign wb_pc = a37;
 
 Controller controller (.clk(clk) , .rst(rst) , .D_op(a5) , .D_f3(a6) , .D_f7(a10) , .D_rd(a7) , .D_rs1(a8) , .D_rs2(a9) ,
                          .alu_out(a25[0]) , .stall(b1) , .next_pc_sel(b2) , .F_im_w_en(b3) , .D_rs1_data_sel(b4),

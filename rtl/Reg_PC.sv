@@ -7,8 +7,8 @@ module Reg_PC (
 );
 
 
-always @(posedge clk) begin
-    if(rst == 1 )begin
+always @(posedge clk or negedge rst) begin
+    if(rst == 0)begin
         current_pc <= 0 ;
     end
     else begin 
@@ -20,5 +20,4 @@ always @(posedge clk) begin
         end
     end
 end
-
 endmodule

@@ -27,7 +27,7 @@ module Controller(
     output reg [2:0] W_f3_1,
     output reg W_wb_data_sel
 );
-
+    // controller-internal pipeline registers
     reg [4:0] E_op ;
     reg [2:0] E_f3 ;
     reg E_f7 ;
@@ -40,7 +40,12 @@ module Controller(
     reg [4:0] W_op ; 
     reg [2:0] W_f3 ;
     reg [4:0] W_rd ;
-    
+
     // TODO: finish Controller design
+    // ...
 endmodule
+
+
+
+
 

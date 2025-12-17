@@ -20,7 +20,7 @@ module Top
 
     /* CPU Core */
     logic [3:0] mem_w_en;
-    word mem_addr, mem_r_data, mem_w_data;
+    word mem_addr, mem_r_data, mem_w_data, wb_pc;
     CoreTop core (
         .clk(clk),
         .rst(rst_n),
@@ -28,6 +28,7 @@ module Top
         .mem_r_data(mem_r_data),
         .mem_w_en(mem_w_en),
         .mem_w_data(mem_w_data),
+        .wb_pc(wb_pc),
         .valid_inst(valid_inst)
     );
 
@@ -125,7 +126,8 @@ module DriveTop ();
         #6 rst_n = 1;
         #4 rst_n = 0;
         #5 rst_n = 1;
-        wait (halt);
+        // wait (halt);
+        #1000000;
         $finish;
     end
 endmodule : DriveTop
