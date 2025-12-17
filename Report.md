@@ -7,32 +7,23 @@ Please type your name and student ID at here:
 - Student Name: <your_chinese_name>
 - Student ID: <your_NCKU_student_ID>
 
-## Question Set (10 pts)
+## Synthesis Questions (20 pts)
 
-There are two questions in total, and it is 5 pts for each question.
+Your report should demonstrate your understanding of pipeline hazards and your specific implementation strategy. Please answer the following questions:
 
-### Question 1
+For **each** hazard (Forwarding case, Load-Use Stall, and Control Flush), describe:
 
-What is the main different between *Architecture* and *Micro-Architecture*?
+1.  **Trigger Condition:** Under what specific circumstances does this hazard occur? (e.g., Which specific instruction sequence? Which register indices are compared?)
+2.  **Resolution Strategy:** How does your hardware resolve this hazard? (e.g., Forwarding data, inserting a bubble, or flushing the pipeline?)
+3.  **Implementation Logic:** How did you implement this in `Controller.v`?
+    * For **Forwarding**: How do you decide priority if multiple stages have the data?
+    * For **Stalls**: Which pipeline registers are held (frozen) and which are flushed?
+    * For **Branches**: How do you clear the wrong-path instructions?
+4. **Branch Prediction**
+   - Please carefully study the branch predictor section of the handout. If it were up to you, which branch predictor design would you choose (Static vs. Dynamic, 1-bit vs. 2-bit)? Why?
+   - Describe how you would design the control signals to resolve the control hazard caused by mispredictions (e.g., logic to flush instructions in IF and ID stages). *(Note: Implementation is bonus, but the conceptual description is required).*
 
-#### Your Answer
-
-Start at here...
-
-### Question 2
-
-Why does the single-cycle CPU need both *ALU* and *Branch Comparator*?
-Cannot the CPU use ALU only? Please explain the reason briefly.
-
-#### Your Answer
-
-Start at here...
-
-## Synthesis Questions (10 pts)
-
-In the synthesis question, please explain **how you implement the single-cycle CPU** in detail.
-
-### Your answer
+### Your Answer
 
 Start at here...
 
